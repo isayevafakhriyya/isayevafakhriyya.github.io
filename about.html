@@ -15,7 +15,7 @@
       p.lead { color: #3683ef; }
       main { max-width: 900px; margin: 2rem auto; padding: 2rem; }
       .about { padding: 2.5rem 0; }
-      .about h2 { font-size: 1.8rem; font-weight: 600; color: #111; margin: 0 0 2rem 0; }
+      .about h2 { font-size: 1.8rem; font-weight: bold; color: #ad3232; margin: 0 0 2rem 0; }
       .about-content { display: grid; gap: 2rem; }
       .about-section { line-height: 1.7; }
       .about-section h3 { font-size: 1.1rem; font-weight: 600; color: #ad3232; margin: 0 0 0.75rem 0; }
@@ -23,6 +23,9 @@
       .about-section .education { color: rgb(28, 88, 166); }
       .about-section .interests { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
       .about-section .interests span { background: #e8e4df; color: #555; padding: 0.4rem 0.9rem; border-radius: 20px; font-size: 0.9rem; }
+      .about-section ul { list-style: none; padding: 0; margin: 0.5rem 0 0 0; }
+      .about-section ul li { font-size: 1rem; color: #333; line-height: 1.7; margin-bottom: 0.5rem; }
+      .about-section ul li::before { content: "•"; color: #ad3232; font-weight: bold; display: inline-block; width: 1em; margin-right: 0.5rem; }
       footer { margin-top: 2rem; background: #5a1313; color: #e5e7eb; text-align: center; padding: 1.5rem 1rem; width: 100%; }
       footer a { color: #ffffff; text-decoration: none; }
       footer a:hover { color: #ffffff; }
@@ -46,12 +49,23 @@
         <h2>About</h2>
         <div class="about-content">
           <div class="about-section">
-            <p>Hello! I'm Fakhriyya Isayeva, an enthusiastic IT student passionate about technology and innovation. I enjoy exploring new technologies, solving complex problems, and continuously learning to grow in the ever-evolving field of information technology.</p>
+            <p>Hello, my name is Fakhriyya. I am an IT student at ADA University. Although I did not have any previous coding experience, I find this field interesting, which is why I am constantly trying to improve myself. At the same time, I am a very perfectionist person and always strive to ensure that everything is done in the best possible way. Currently, I am focusing on improving my web development skills and building small projects to gain more practical experience.</p>
           </div>
-          
+
           <div class="about-section">
             <h3>Education</h3>
-            <p class="education">IT Student at <strong>ADA University</strong></p>
+            <p class="education">Lyceum Named After Academician Zarifa Aliyeva</p>
+            <p class="education"> IT Student at <strong>ADA University</strong></p>
+          </div>
+
+          <div class="about-section">
+            <h3>Qualifications</h3>
+            <ul>
+              <li>SASMO – Bronze Medal (2024)</li>
+              <li>SIMOC – Silver Medal (2024)</li>
+              <li>AMO – Silver Medal (2024)</li>
+              <li>AIMO – Silver Medal (2024)</li>
+            </ul>
           </div>
           
           <div class="about-section">
@@ -61,6 +75,9 @@
               <span>Programming</span>
               <span>Technology</span>
               <span>Learning</span>
+              <span>Problem Solving</span>
+              <span>Reading Books</span>
+              <span>Watching Movies</span>
             </div>
           </div>
         </div>

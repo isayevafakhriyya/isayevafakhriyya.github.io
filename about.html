@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>About - Fakhriyya Isayeva</title>
     <style>
-      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 0; padding: 0; background: #f2ede7; color: #111; }
-      nav { position: sticky; top: 0; z-index: 100; background: rgba(242, 242, 242, 0.92); backdrop-filter: blur(6px); box-shadow: 0 4px 12px rgba(16,24,40,0.06); width: 100%; }
-      nav ul { display: flex; gap: 1.25rem; list-style: none; margin: 0 auto; padding: 0.75rem 2rem; max-width: 900px; }
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 0; padding: 0; background: #f2ede7; color: #111; transition: background-color 0.3s, color 0.3s; }
+      body.dark { background: #1a1a1a; color: #e5e7eb; }
+      nav { position: sticky; top: 0; z-index: 100; background: rgba(242, 242, 242, 0.92); backdrop-filter: blur(6px); box-shadow: 0 4px 12px rgba(16,24,40,0.06); width: 100%; transition: background-color 0.3s; }
+      body.dark nav { background: rgba(26, 26, 26, 0.92); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+      nav ul { display: flex; gap: 1.25rem; list-style: none; margin: 0 auto; padding: 0.75rem 2rem; max-width: 900px; align-items: center; }
       nav a { text-decoration: none; color: #ad3232; font-weight: 600; }
       nav a:hover { color: #1d4ed8; }
+      body.dark nav a:hover { color: #60a5fa; }
+      .theme-toggle { background: none; border: none; font-size: 1.2rem; cursor: pointer; padding: 0.25rem 0.5rem; margin-left: auto; transition: transform 0.2s; }
+      .theme-toggle:hover { transform: scale(1.1); }
+      .theme-toggle:focus { outline: 2px solid #ad3232; outline-offset: 2px; border-radius: 4px; }
+      body.dark .theme-toggle:focus { outline-color: #fbbf24; }
       header { max-width: 900px; margin: 1rem auto 2rem; }
       h1 { margin: 0 0 .5rem; }
       p.lead { color: #3683ef; }
@@ -20,11 +27,15 @@
       .about-section { line-height: 1.7; }
       .about-section h3 { font-size: 1.1rem; font-weight: 600; color: #ad3232; margin: 0 0 0.75rem 0; }
       .about-section p { font-size: 1rem; color: #333; margin: 0 0 0.5rem 0; }
+      body.dark .about-section p { color: #d1d5db; }
       .about-section .education { color: rgb(28, 88, 166); }
+      body.dark .about-section .education { color: #60a5fa; }
       .about-section .interests { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
       .about-section .interests span { background: #e8e4df; color: #555; padding: 0.4rem 0.9rem; border-radius: 20px; font-size: 0.9rem; }
+      body.dark .about-section .interests span { background: #374151; color: #d1d5db; }
       .about-section ul { list-style: none; padding: 0; margin: 0.5rem 0 0 0; }
       .about-section ul li { font-size: 1rem; color: #333; line-height: 1.7; margin-bottom: 0.5rem; }
+      body.dark .about-section ul li { color: #d1d5db; }
       .about-section ul li::before { content: "•"; color: #ad3232; font-weight: bold; display: inline-block; width: 1em; margin-right: 0.5rem; }
       footer { margin-top: 2rem; background: #5a1313; color: #e5e7eb; text-align: center; padding: 1.5rem 1rem; width: 100%; }
       footer a { color: #ffffff; text-decoration: none; }
@@ -41,6 +52,7 @@
         <li><a href="about.html">About</a></li>
         <li><a href="projects.html">Projects</a></li>
         <li><a href="contact.html">Contact</a></li>
+        <li><button class="theme-toggle" aria-label="Toggle dark mode" id="themeToggle">🌙</button></li>
       </ul>
     </nav>
 
@@ -107,6 +119,48 @@
       </div>
       <div class="footer-contact">Contact: <a href="mailto:fisayeva26196@ada.edu.az">fisayeva26196@ada.edu.az</a></div>
     </footer>
+    <script>
+      (function() {
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        function getInitialTheme() {
+          const savedTheme = localStorage.getItem('theme');
+          if (savedTheme) {
+            return savedTheme;
+          }
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        
+        function applyTheme(theme) {
+          if (theme === 'dark') {
+            body.classList.add('dark');
+            themeToggle.textContent = '☀️';
+            themeToggle.setAttribute('aria-label', 'Toggle light mode');
+          } else {
+            body.classList.remove('dark');
+            themeToggle.textContent = '🌙';
+            themeToggle.setAttribute('aria-label', 'Toggle dark mode');
+          }
+        }
+        
+        const currentTheme = getInitialTheme();
+        applyTheme(currentTheme);
+        localStorage.setItem('theme', currentTheme);
+        
+        themeToggle.addEventListener('click', () => {
+          const newTheme = body.classList.contains('dark') ? 'light' : 'dark';
+          applyTheme(newTheme);
+          localStorage.setItem('theme', newTheme);
+        });
+        
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+          if (!localStorage.getItem('theme')) {
+            applyTheme(e.matches ? 'dark' : 'light');
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
 

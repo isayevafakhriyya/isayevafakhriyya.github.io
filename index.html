@@ -5,23 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Fakhriyya Isayeva</title>
     <style>
-      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 0; padding: 0; background: #f2ede7; color: #111; }
-      nav { position: sticky; top: 0; z-index: 100; background: rgba(242, 242, 242, 0.92); backdrop-filter: blur(6px); box-shadow: 0 4px 12px rgba(16,24,40,0.06); width: 100%; }
-      nav ul { display: flex; gap: 1.25rem; list-style: none; margin: 0 auto; padding: 0.75rem 2rem; max-width: 900px; }
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 0; padding: 0; background: #f2ede7; color: #111; transition: background-color 0.3s, color 0.3s; }
+      body.dark { background: #1a1a1a; color: #e5e7eb; }
+      nav { position: sticky; top: 0; z-index: 100; background: rgba(242, 242, 242, 0.92); backdrop-filter: blur(6px); box-shadow: 0 4px 12px rgba(16,24,40,0.06); width: 100%; transition: background-color 0.3s; }
+      body.dark nav { background: rgba(26, 26, 26, 0.92); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+      nav ul { display: flex; gap: 1.25rem; list-style: none; margin: 0 auto; padding: 0.75rem 2rem; max-width: 900px; align-items: center; }
       nav a { text-decoration: none; color: #ad3232; font-weight: 600; }
       nav a:hover { color: #1d4ed8; }
+      body.dark nav a:hover { color: #60a5fa; }
+      .theme-toggle { background: none; border: none; font-size: 1.2rem; cursor: pointer; padding: 0.25rem 0.5rem; margin-left: auto; transition: transform 0.2s; }
+      .theme-toggle:hover { transform: scale(1.1); }
+      .theme-toggle:focus { outline: 2px solid #ad3232; outline-offset: 2px; border-radius: 4px; }
+      body.dark .theme-toggle:focus { outline-color: #fbbf24; }
       header { max-width: 900px; margin: 1rem auto 2rem; }
       h1 { margin: 0 0 .5rem; }
       p.lead { color: #3683ef; }
       main { max-width: 900px; margin: 2rem auto; padding: 2rem; }
       .hero { display: flex; gap: 1.75rem; align-items: flex-start; }
       .hero img { width: 100%; max-width: 280px; border-radius: 12px; box-shadow: 0 10px 30px rgba(15,23,42,0.12); object-fit: cover; }
-      .hero .hero-text { flex: 1; min-height: 350px; border-radius: 12px; background: #f2ede7; padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
+      .hero .hero-text { flex: 1; min-height: 350px; border-radius: 12px; background: #f2ede7; padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: 1rem; transition: background-color 0.3s; }
+      body.dark .hero .hero-text { background: #2d2d2d; }
       .hero .hero-text p { font-size: 1.3rem; line-height: 1.7; font-weight: 400; }
+      body.dark .hero .hero-text p { color: #e5e7eb; }
       .hero .hero-text .hero-icons { display: flex; flex-direction: column; gap: 0.75rem; align-items: center; justify-content: center; margin: 2rem auto; padding: 1.5rem; }
       .hero .hero-text .hero-icons > div { display: flex; gap: 1rem; align-items: center; justify-content: center; }
       .hero .hero-text .hero-icons img { max-width: 110px; height: auto; border-radius: 8px; box-shadow: 0 6px 16px rgba(15,23,42,0.08); }
+      body.dark .hero .hero-text .hero-icons img { box-shadow: 0 6px 16px rgba(0,0,0,0.4); }
       .hero .hero-text .hero-icons-text { margin: 0; font-size: 0.9rem; color: #666; text-align: center; }
+      body.dark .hero .hero-text .hero-icons-text { color: #9ca3af; }
+      body.dark .hero .hero-text p span[style*="color: #ad3232"] { color: #f87171 !important; }
+      body.dark .hero .hero-text p span[style*="color: rgb(28, 88, 166)"] { color: #60a5fa !important; }
       footer { margin-top: 2rem; background: #5a1313; color: #e5e7eb; text-align: center; padding: 1.5rem 1rem; width: 100%; }
       footer a { color: #ffffff; text-decoration: none; }
       footer a:hover { color: #ffffff; }
@@ -37,6 +50,7 @@
         <li><a href="about.html">About</a></li>
         <li><a href="projects.html">Projects</a></li>
         <li><a href="contact.html">Contact</a></li>
+        <li><button class="theme-toggle" aria-label="Toggle dark mode" id="themeToggle">🌙</button></li>
       </ul>
     </nav>
 
@@ -83,6 +97,53 @@ I am an <strong>IT student</strong> at
       </div>
       <div class="footer-contact">Contact: <a href="mailto:fisayeva26196@ada.edu.az">fisayeva26196@ada.edu.az</a></div>
     </footer>
+    <script>
+      (function() {
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        // Get saved theme or system preference
+        function getInitialTheme() {
+          const savedTheme = localStorage.getItem('theme');
+          if (savedTheme) {
+            return savedTheme;
+          }
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        
+        // Apply theme
+        function applyTheme(theme) {
+          if (theme === 'dark') {
+            body.classList.add('dark');
+            themeToggle.textContent = '☀️';
+            themeToggle.setAttribute('aria-label', 'Toggle light mode');
+          } else {
+            body.classList.remove('dark');
+            themeToggle.textContent = '🌙';
+            themeToggle.setAttribute('aria-label', 'Toggle dark mode');
+          }
+        }
+        
+        // Initialize theme
+        const currentTheme = getInitialTheme();
+        applyTheme(currentTheme);
+        localStorage.setItem('theme', currentTheme);
+        
+        // Toggle theme on click
+        themeToggle.addEventListener('click', () => {
+          const newTheme = body.classList.contains('dark') ? 'light' : 'dark';
+          applyTheme(newTheme);
+          localStorage.setItem('theme', newTheme);
+        });
+        
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+          if (!localStorage.getItem('theme')) {
+            applyTheme(e.matches ? 'dark' : 'light');
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
 
